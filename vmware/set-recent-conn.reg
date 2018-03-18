@@ -1,0 +1,9 @@
+; The following will populate the recent connections on the VI client with
+; vcentersa60,esx-mel-01,vcentersb60,esx-mel-02
+;
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\VMware\VMware Infrastructure Client]
+
+[HKEY_CURRENT_USER\Software\VMware\VMware Infrastructure Client\Preferences]
+"RecentConnections"="vcentersa60,esx-mel-01,vcentersb60,esx-mel-02"
