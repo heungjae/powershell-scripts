@@ -1,11 +1,11 @@
 #
 ## File: extract-wflow.ps1
-## Extract all the workflow definitions to a file
+## Extracts all the workflow definitions to separate files - $pfx_oracle.csv $pfx_sqlserver.csv and $pfx_sqlinstance.csv
 #
 
-# Function Export-Workflow ([string]$csvfile = $null,[switch]$help)
+# Function Export-Workflow ([string]$csvdir = $null,[switch]$help, [string]$pfx = "v")
 
-param([string]$csvfile = $null, [switch]$help)
+param([string]$csvdir = $null, [switch]$help, [string]$pfx = "v")
 
 function write-not-null ($val, $label)
 {
@@ -31,6 +31,10 @@ if ($help) {
     $helpString
     break  # Exits the function early
     }
+
+if ($csvdir -eq $null) {
+$csvdir = ".\"
+}
 
 # srch_app_type =  SQLServer  SqlInstance  Oracle
 $srch_app_type = "Oracle"
@@ -155,5 +159,6 @@ foreach ($wf_Item in $WorkFlows) {
         
 }   ## end-foreach
 
-$table | where-object { $_.AppType -eq "Oracle" } | export-csv oracle.csv -NoTypeInformation -Delimiter ";"
-$table | where-object { $_.AppType -eq "SQLServer" }
+$table | where-object { $_.AppType -eq "Oracle" } | export-csv $csvdir$pfx_oracle.csv -NoTypeInformation -Delimiter ";"
+$table | where-object { $_.AppType -eq "SQLServer" } | export-csv $csvdir$pfx_sqlserver.csv -NoTypeInformation -Delimiter ";"
+$table | where-object { $_.AppType -eq "SqlInstance" } | export-csv $csvdir$pfx_sqlinstance.csv -NoTypeInformation -Delimiter ";"
